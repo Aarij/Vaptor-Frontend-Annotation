@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
-  <ModulePrefs title="Annotation" description="Display segment annotation"
+  <ModulePrefs title="Playlist" description="Display the playlist"
     author="Aarij" author_email="siddiqui@dbis.rwth-aachen.de"
     width="300" height="350">
 
