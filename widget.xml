@@ -2,7 +2,7 @@
 <Module>
   <ModulePrefs title="Playlist" description="Display the playlist"
     author="Aarij" author_email="siddiqui@dbis.rwth-aachen.de"
-    width="300" height="350">
+    width="250" height="380">
 
     <Require feature="opensocial-0.8"></Require>
     <Require feature="openapp"></Require>
@@ -70,9 +70,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	<!-- Bootstrap stylesheet import -->
 	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<!-- own style information -->
-	<link rel="stylesheet" href="http://CAE-Community-Application-Editor.github.io/frontendComponent-UserPreferencesWidget/css/style.css">
+	<link rel="stylesheet" href="http://eiche.informatik.rwth-aachen.de/siddiqui/widgets/Vaptor-Frontend-Playlist/css/style.css">
 
-	<link rel="stylesheet" href="http://localhost:8085/Vaptor-Frontend-Playlist/css/star_rating.css">
+	<link rel="stylesheet" href="http://eiche.informatik.rwth-aachen.de/siddiqui/widgets/Vaptor-Frontend-Playlist/css/star_rating.css">
 	
 	
 	<!-- import jQuery for AJAX calls -->
@@ -85,17 +85,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	<!-- additional widget specific imports (put your own imports here as well) -->
 
 	<!-- import the client library -->
-	<script type="text/javascript" src="http://localhost:8085/Vaptor-Frontend-Playlist/js/lib/las2peerWidgetLibrary.js"></script>
+	<script type="text/javascript" src="http://eiche.informatik.rwth-aachen.de/siddiqui/widgets/Vaptor-Frontend-Playlist/js/lib/las2peerWidgetLibrary.js"></script>
 	<!-- import application script -->
 	
-	<script type="text/javascript" src="http://localhost:8085/Vaptor-Frontend-Playlist/js/applicationScript.js"></script>
+	<script type="text/javascript" src="http://eiche.informatik.rwth-aachen.de/siddiqui/widgets/Vaptor-Frontend-Playlist/js/applicationScript.js"></script>
   
 </head>
 <body>
-	<script src="http://localhost:8085/Vaptor-Frontend-Playlist/js/LifemirrorPlayer.js"></script>
+	<script src="http://eiche.informatik.rwth-aachen.de/siddiqui/widgets/Vaptor-Frontend-Playlist/js/LifemirrorPlayer.js"></script>
 	
 	<!-- inter widget communication library import -->
-	<script type="text/javascript" src="http://localhost:8085/Vaptor-Frontend-Playlist/js/lib/iwc.js"></script>
+	<script type="text/javascript" src="http://eiche.informatik.rwth-aachen.de/siddiqui/widgets/Vaptor-Frontend-Playlist/js/lib/iwc.js"></script>
 	
 
 	<!-- container for actual page content -->

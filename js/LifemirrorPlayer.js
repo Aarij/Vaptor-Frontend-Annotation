@@ -51,31 +51,19 @@ LifemirrorPlayer.prototype.preloadVideos = function() {
     {
         // Prepare HTML to insert
         // This is necessary to prevent the browser closing tags
-        /*var htmlToInsert = "<video controls height='50%' preload oncanplaythrough='lifemirror.preloaderCallback()' onpause='lifemirror.videoCallback(\""+this.playlist[index]+"\")' id='"+ this.playlist[index]+"' style='display:none' "+this.options+">";
-        //htmlToInsert += "<source src='"+Lifemirror.baseurl+Lifemirror.playlist[index]+"/video.mp4' type='video/mp4'>";
-        //htmlToInsert += "<source src='"+Lifemirror.baseurl+Lifemirror.playlist[index]+"/video.ogg' type='video/ogg'>";
-		htmlToInsert += "<source src='"+this.playlist[index]+"' type='video/mp4'>";
-        //htmlToInsert += "<source src='"+Lifemirror.playlist[index]+"' type='video/ogg'>";
-        htmlToInsert += "</video>";
-		*/
+        
 		
-		var annotationHtmlToInsert = "<div \" class=\"list-group-item\">";
-		annotationHtmlToInsert += "<div style=\"width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;\"><a href=\"javascript:void(0)\" id='"+this.annotationlist[index]+"' title='"+this.annotationTextList[index]+"' onclick='lifemirror.playVideo(\""+this.playlist[index]+"\")'>";
-		//onclick='clicked("+this+");'
+		var annotationHtmlToInsert = "<div \" class=\"list-group-item\" onclick='lifemirror.onAnnotationClick(\""+this.playlist[index]+"\")' >";
+		annotationHtmlToInsert += "<div class=\"truncate annotationtitle\" ><a href=\"javascript:void(0)\" id='"+this.annotationlist[index]+"' title='"+this.annotationTextList[index]+"'>";
+		
 		annotationHtmlToInsert += this.annotationlist[index]+" ("+this.weightList[index]+")";
-		//annotationHtmlToInsert += "onclick='lifemirror.videoCallback(\""+this.playlist[index]+"\")'"
-		//annotationHtmlToInsert +="<br>"
-		//annotationHtmlToInsert += this.annotationTextList[index];
-		annotationHtmlToInsert += "</a></div>";
-		//annotationHtmlToInsert += '<a href="javascript:void(0)" id="recommend" name="'+this.edgeList[index]+'">Recommend</a>';
-		//annotationHtmlToInsert += '<a href="javascript:void(0)" onclick="recommend(\"'+this.edgeList[index]+'\")">Recommend</a>';
 		
-		/*annotationHtmlToInsert += "<select id=\""+this.edgeList[index]+"\" class=\"1-n\"></select>";
-		annotationHtmlToInsert += "<a href=\"javascript:void(0)\" id=\""+this.edgeList[index]+"\" onclick='recommend(\""+this.edgeList[index]+"\")'>Recommend</a>";*/
+		annotationHtmlToInsert += "</a></div>";
+		
 		
 		var edge = this.edgeList[index];
 		
-		annotationHtmlToInsert += "<div style =\"width: 100%; display: table-cell;\" class=\"rating\"><input type=\"radio\" name=\""+edge+"\" id=\"4_"+edge+"_stars\" value=\"4\" onclick=\"recommend("+edge+",4)\"> <label class=\"lbl"+edge+" stars\" for=\"4_"+edge+"_stars\"></label> <input type=\"radio\" name=\""+edge+"\" id=\"3_"+edge+"_stars\" value=\"3\" onclick=\"recommend("+edge+",3)\"> <label class=\"lbl"+edge+" stars\" for=\"3_"+edge+"_stars\"></label> <input type=\"radio\" name=\""+edge+"\" id=\"2_"+edge+"_stars\" value=\"2\" onclick=\"recommend("+edge+",2)\"> <label class=\"lbl"+edge+" stars\" for=\"2_"+edge+"_stars\"></label> <input type=\"radio\" name=\""+edge+"\" id=\"1_"+edge+"_stars\" value=\"1\" onclick=\"recommend("+edge+",1)\"> <label class=\"lbl"+edge+" stars\" for=\"1_"+edge+"_stars\"></label> <input type=\"radio\" name=\""+edge+"\" id=\"0_"+edge+"_stars\" value=\"0\" onclick=\"recommend("+edge+",0)\" required> <label class=\"lbl"+edge+" stars\" for=\"0_"+edge+"_stars\"></label></div></div>";
+		annotationHtmlToInsert += "<div style =\"width: 100%; display: table-cell;\" class=\"rating\"><input type=\"radio\" name=\""+edge+"\" id=\"4_"+edge+"_stars\" value=\"4\" onclick=\"recommend("+edge+",5)\"> <label class=\"lbl"+edge+" stars\" for=\"4_"+edge+"_stars\"></label> <input type=\"radio\" name=\""+edge+"\" id=\"3_"+edge+"_stars\" value=\"3\" onclick=\"recommend("+edge+",4)\"> <label class=\"lbl"+edge+" stars\" for=\"3_"+edge+"_stars\"></label> <input type=\"radio\" name=\""+edge+"\" id=\"2_"+edge+"_stars\" value=\"2\" onclick=\"recommend("+edge+",3)\"> <label class=\"lbl"+edge+" stars\" for=\"2_"+edge+"_stars\"></label> <input type=\"radio\" name=\""+edge+"\" id=\"1_"+edge+"_stars\" value=\"1\" onclick=\"recommend("+edge+",2)\"> <label class=\"lbl"+edge+" stars\" for=\"1_"+edge+"_stars\"></label> <input type=\"radio\" name=\""+edge+"\" id=\"0_"+edge+"_stars\" value=\"0\" onclick=\"recommend("+edge+",1)\" required> <label class=\"lbl"+edge+" stars\" for=\"0_"+edge+"_stars\"></label></div></div>";
 		
 		
 		
@@ -83,7 +71,7 @@ LifemirrorPlayer.prototype.preloadVideos = function() {
 		var url = this.playlist[index];
 		var filename = url.substring(url.lastIndexOf('/')+1);
 		filename = filename.substr(0, filename.indexOf('#')); 
-		console.log("FILENAME: "+filename);
+		//console.log("FILENAME: "+filename);
 		var num = +this.durationList[index] + +this.timeList[index];
 		
 		var videoCaption = "<h4 id='"+ this.timeList[index]+"' style='display:none'>Showing "+filename+" from "+ this.timeList[index]+" secs to " +num+" secs. </h4> <br>"
@@ -115,10 +103,12 @@ LifemirrorPlayer.prototype.startPlaying = function() {
     //object.style.display = 'inline';
 	//name.style.display = 'inline';
 	//annObject.style.display = 'inline';
-	annObject.style.backgroundColor = '#5BC0DE';
-	annObject.style.color = '#333';
+	if(annObject!=null){
+		annObject.parentNode.parentNode.style.backgroundColor = '#5BC0DE';
+		annObject.style.color = '#FFF';
+	}
 	playingNow = this.playlist[0];
-	console.log("startPlaying() PlayingNow: "+ playingNow);
+	//console.log("startPlaying() PlayingNow: "+ playingNow);
     //object.play();
 }
 
@@ -127,12 +117,7 @@ function clicked(item) {
 	lifemirror.videoCallback($(item).attr("id"));
 }
 
-
-   
-   
-LifemirrorPlayer.prototype.playVideo = function(id) {
-	
-	console.log("Annotation widget: sending playVideo Intent");
+LifemirrorPlayer.prototype.onAnnotationClick = function(id) {
 
 	var intent = {
 		"component":"",
@@ -149,8 +134,15 @@ LifemirrorPlayer.prototype.playVideo = function(id) {
 		client.publish(intent);
 	}
 	
+	this.playVideo(id);
+
+}
+
+   
+LifemirrorPlayer.prototype.playVideo = function(id) {
 	
-    
+	//console.log("Annotation widget: sending playVideo Intent");
+
 	//var pausetime = document.getElementById(id).currentTime;
 	//console.log(pausetime);
 	//var start_time = id.match(/#t=(.*),/);
@@ -173,10 +165,11 @@ LifemirrorPlayer.prototype.playVideo = function(id) {
 			
 			// hide the previous annotation
 			//document.getElementById(Lifemirror.annotationlist[index-1]).style.display = 'none';
-			console.log("INDEX: "+index);
-			console.log("PlayingNow: "+playingNow);
-			console.log("annotationlist: "+this.annotationlist[0]);
-			document.getElementById(this.annotationlist[index]).style.backgroundColor = 'transparent';
+			//console.log("INDEX: "+index);
+			//console.log("PlayingNow: "+playingNow);
+			//console.log("annotationlist: "+this.annotationlist[0]);
+			document.getElementById(this.annotationlist[index]).parentNode.parentNode.style.backgroundColor = 'transparent';
+			document.getElementById(this.annotationlist[index]).style.color = '#337ab7';
 			//document.getElementById(this.annotationlist[index]).style.color = '#FFFFFF';
 			//index = 0;
 
@@ -198,8 +191,10 @@ LifemirrorPlayer.prototype.playVideo = function(id) {
 				// //object.style.display = 'inline';
 				// //name.style.display = 'inline';
 				//annobject.style.display = 'inline';
-				annObject.style.backgroundColor = '#5BC0DE';
-				annObject.style.color = '#333';
+				if(annObject!=null){
+					annObject.parentNode.parentNode.style.backgroundColor = '#5BC0DE';
+					annObject.style.color = '#FFF';
+				}
 				playingNow = id;
 				//object.play();
 				
@@ -222,7 +217,7 @@ LifemirrorPlayer.prototype.playVideo = function(id) {
 LifemirrorPlayer.prototype.videoCallback = function(id, pausetime) {
 	
     //var pausetime = document.getElementById(id).currentTime;
-	console.log(pausetime);
+	//console.log(pausetime);
 	var start_time = id.match(/#t=(.*),/);
 	var end_time = id.match(/,(.*)/);
 	//alert (start_time[1]+","+end_time[1]);
@@ -244,7 +239,8 @@ LifemirrorPlayer.prototype.videoCallback = function(id, pausetime) {
 			
 			// hide the previous annotation
 			//document.getElementById(Lifemirror.annotationlist[index-1]).style.display = 'none';
-			document.getElementById(this.annotationlist[index-1]).style.backgroundColor = 'transparent';
+			document.getElementById(this.annotationlist[index-1]).parentNode.parentNode.style.backgroundColor = 'transparent';
+			document.getElementById(this.annotationlist[index-1]).style.color = '#337ab7';
 			//document.getElementById(this.annotationlist[index-1]).style.color = '#FFFFFF';
 			//index = 0;
 
@@ -261,16 +257,19 @@ LifemirrorPlayer.prototype.videoCallback = function(id, pausetime) {
 				//object.style.display = 'inline';
 				//name.style.display = 'inline';
 				//annobject.style.display = 'inline';
-				annObject.style.backgroundColor = '#5BC0DE';
-				annObject.style.color = '#333';
+				if(annObject!=null){
+					annObject.parentNode.parentNode.style.backgroundColor = '#5BC0DE';
+					annObject.style.color = '#FFF';
+				}
 				playingNow = this.playlist[index];
 				//object.play();
 			//}
 		}
 		else{
 			var annObject = document.getElementById(this.annotationlist[index]);
-			annObject.style.backgroundColor = 'transparent';
-			annObject.style.color = '#FFFFFF'
+			annObject.parentNode.parentNode.style.backgroundColor = 'transparent';
+			annObject.style.color = '#337ab7'
+			//document.getElementById(this.annotationlist[index]).style.color = '#23527c';
 			
 			// //document.getElementById("end").style.backgroundColor = '#5BC0DE';
 		
@@ -318,7 +317,7 @@ function flushLists(){
 
 function recommend(edgeid, weight) {
 	
-	console.log(edgeid);
+	//console.log(edgeid);
 	var style = document.createElement('style');
 	style.type = 'text/css';
 	//style.innerHTML = 'input[type="radio"], .rating label.stars { float: right; line-height: 30px; height: 30px; }';
@@ -331,7 +330,7 @@ function recommend(edgeid, weight) {
 	
 	document.getElementsByTagName('head')[0].appendChild(style);
 	
-	console.log(weight+ " tada :D");
+	//console.log(weight+ " tada :D");
 	
 	//var edgeid = $(this).attr('name');
 	//var weight = document.getElementById(edgeid).value;
@@ -343,7 +342,7 @@ function recommend(edgeid, weight) {
 		dataType:'text',
 		
 		success: function(value) {
-			console.log("success");
+			//console.log("success");
 		},
 		statusCode: {
 			401: function() {
@@ -356,6 +355,9 @@ function recommend(edgeid, weight) {
 		},
 		error: function(e){console.log(e);}
 	});
+	
+	//event.preventDefault();
+	return false;
 
 }      
 
@@ -399,32 +401,17 @@ function postGetRecommendations(value){
 	for (var i = 0; i < jsonData.length; i=i+2) {
 		var recommendationsTitle = jsonData[i];
 		var recommendations = jsonData[i+1];
-		console.log("String recommendations: "+recommendations.toString());
+		//console.log("String recommendations: "+recommendations.toString());
 
 		document.getElementById("recommendation").innerHTML += "<div style=\"cursor:pointer\" class=\"col-sm-2\" > <div class='square-box'> <div class='square-content'> <div> <span class=\"recommendspan\" data-info='"+recommendations+"'>"+recommendationsTitle+"</span> </div> </div> </div></div>";
 		
 	}
-		$(".square-box").click(function(event){
-
-					console.log("data value: "+$(this).find('.recommendspan').attr('data-info'));
-					
-					document.getElementById("xmpp_status").innerHTML = "";
-                    document.getElementById("videonamedisplay").innerHTML = "";
-                    document.getElementById("videodisplay").innerHTML = "";
-                    document.getElementById("annotationdisplay").innerHTML = "";
-                    document.getElementById("map-canvas").style.display = "block";
-                    flushLists();
-					valeur = 0;
-					$('.progress-bar').css('width', valeur+'%').attr('aria-valuenow', valeur);
-                    postGetVideos($(this).find('.recommendspan').attr('data-info'));
-					//playVideos();
-
-				});
+		
 }
 
 function postGetVideos(value){
 
-	console.log(value);
+	//console.log(value);
 					
 	var jsonData = JSON.parse(value);
 
@@ -449,7 +436,7 @@ function postGetVideos(value){
 		edgeList.push(edge);
 		weightList.push(weight);
 	}
-	console.log(annotationlist[0]);
+	//console.log(annotationlist[0]);
 	$('html,body').animate({
 	scrollTop: $("#annotationdisplay").offset().top},'slow');
 	playVideos();

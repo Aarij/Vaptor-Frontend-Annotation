@@ -59,6 +59,9 @@ $(document).ready(function() {
 		if (intent.action == "onPause"){
 			lifemirror.videoCallback(intent.data, intent.extras.pauseTime);
 		}
+		if (intent.action == "onNextClick"){
+			lifemirror.playVideo(intent.data);
+		}
 		
 	};
 	client.connect(iwcCallback);
